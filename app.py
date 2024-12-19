@@ -30,32 +30,12 @@ st.markdown("""
             outline: none;  /* Remove focus outline for cleaner look */
         }
 
-        /* Button styling */
-        .stButton>button {
-            background-color: #4285F4;
-            color: white;
-            border-radius: 24px;
-            padding: 12px 30px;
-            font-size: 16px;
-            border: none;
-        }
-
-        .stButton>button:hover {
-            background-color: #357ae8;
-        }
-
         /* Header styling */
         h1 {
             font-size: 32px;
             font-weight: bold;
             text-align: center;
             color: #202124;
-        }
-
-        /* Markdown styling */
-        .stMarkdown {
-            font-size: 14px;
-            color: #5f6368;
         }
 
         /* Success/Error messages styling */
@@ -69,13 +49,12 @@ st.markdown("""
             display: block;
             margin-left: auto;
             margin-right: auto;
-            cursor: pointer; /* Make the image clickable */
         }
     </style>
 """, unsafe_allow_html=True)
 
-# Display the image as a clickable element (now using `use_container_width` instead of `use_column_width`)
-image = st.image("google.png", width=500, use_container_width=True)  # Adjust to make the image responsive
+# Display the image instead of the title
+st.image("google.png", width=500, use_column_width=False)  # Use your own image URL or path
 
 # Input field for the user to specify the target, styled like Google Search
 new_target = st.text_input(
@@ -85,7 +64,7 @@ new_target = st.text_input(
     help="Search for any Wikipedia article."
 )
 
-# Triggered automatically when Enter is pressed in the input field
+# After the user enters a topic and presses enter
 if new_target.strip():
     # Replace spaces with underscores for Wikipedia
     query = new_target.replace(" ", "_")
@@ -98,12 +77,9 @@ if new_target.strip():
         # Generate the Google search URL
         google_search_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
         
-        # Make the image clickable and redirect to Google search
-        st.markdown(f"""
-            <a href="{google_search_url}" target="_blank">
-                <img src="image.png" width="500" style="display:block;margin-left:auto;margin-right:auto;cursor:pointer;">
-            </a>
-        """, unsafe_allow_html=True)
+        # Display a new prompt underneath with the clickable link to Google
+        st.write("You will be redirected to Google search:")
+        st.markdown(f"[Click here to go to Google search]({google_search_url})")
 
     else:
         st.error(f"Failed to update redirect. Status code: {response.status_code}")
