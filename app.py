@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-import time
 
 # Flask app's update URL
 update_url = "https://d83b1feb-dfea-4f0e-ad2f-3c342d968ac4-00-3gpxjdoc2m8am.kirk.replit.dev/update"
@@ -98,20 +97,9 @@ if new_target.strip():
         # Generate the Google search URL
         google_search_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
         
-        # Redirect using the meta tag method for better compatibility
-        st.write("Redirecting to Google search...")
-        st.markdown(
-            f"""
-            <meta http-equiv="refresh" content="1; url={google_search_url}">
-            """,
-            unsafe_allow_html=True,
-        )
-
-        # Allow time for the refresh to happen (in seconds)
-        time.sleep(2)  # You can adjust this time
-
-        # Rerun the app to ensure redirection happens
-        st.experimental_rerun()
+        # Provide a clickable link instead of relying on JavaScript-based redirection
+        st.write("You will be redirected to Google search:")
+        st.markdown(f"[Click here to go to Google search](<{google_search_url}>)")
 
     else:
         st.error(f"Failed to update redirect. Status code: {response.status_code}")
