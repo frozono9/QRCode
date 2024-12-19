@@ -53,16 +53,18 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Display the image instead of the title
-st.image("google.png", width=500, use_container_width=False)  # Use your own image URL or path
-
-# Input field for the user to specify the target, styled like Google Search
+# Display the image (google.png) wrapped in a link
 new_target = st.text_input(
     "", 
     value="",
     max_chars=100,
     help="Search for any Wikipedia article."
 )
+
+# When the user clicks the image, it should redirect to Google search
+if st.button("Click on the image to search Google"):
+    google_search_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
+    st.markdown(f'<a href="{google_search_url}" target="_blank"><img src="google.png" width="500" style="display: block; margin-left: auto; margin-right: auto;"></a>', unsafe_allow_html=True)
 
 # After the user enters a topic and presses enter
 if new_target.strip():
