@@ -58,7 +58,7 @@ st.image("google.png", width=500, use_column_width=False)  # Use your own image 
 
 # Input field for the user to specify the target, styled like Google Search
 new_target = st.text_input(
-    "Enter the topic for the Wikipedia article:", 
+    "", 
     value="",
     max_chars=100,
     help="Search for any Wikipedia article."
