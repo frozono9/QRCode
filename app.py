@@ -74,9 +74,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Display the image as a clickable element (now using `use_container_width` instead of `use_column_width`)
-image = st.image("google.png", width=500, use_container_width=True)  # Adjust to make the image responsive
-
 # Input field for the user to specify the target, styled like Google Search
 new_target = st.text_input(
     "Enter the topic for the Wikipedia article:", 
@@ -98,10 +95,10 @@ if new_target.strip():
         # Generate the Google search URL
         google_search_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
         
-        # Make the image clickable and redirect to Google search
+        # Display image as clickable and redirect to Google search
         st.markdown(f"""
             <a href="{google_search_url}" target="_blank">
-                <img src="image.png" width="500" style="display:block;margin-left:auto;margin-right:auto;cursor:pointer;">
+                <img src="google.png" width="500" style="display:block;margin-left:auto;margin-right:auto;cursor:pointer;">
             </a>
         """, unsafe_allow_html=True)
 
