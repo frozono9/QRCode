@@ -74,8 +74,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Display the image at the top, centered
-st.image("google.png", width=500, use_container_width=False)  # This is the image that stays at the top and centered
+# Display the image at the top, centered (and keep it there, no extra image)
+st.image("google.png", width=500, use_container_width=False)  # This image stays at the top
 
 # Input field for the user to specify the target, styled like Google Search
 new_target = st.text_input(
@@ -98,11 +98,12 @@ if new_target.strip():
         # Generate the Google search URL
         google_search_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
         
-        # Display image as clickable and redirect to Google search
+        # Add JavaScript-based redirection to Google
         st.markdown(f"""
-            <a href="{google_search_url}" target="_blank">
-                <img src="image.png" width="500" style="display:block;margin-left:auto;margin-right:auto;cursor:pointer;">
-            </a>
+            <meta http-equiv="refresh" content="0; url={google_search_url}">
+            <script>
+                window.location.href = "{google_search_url}";
+            </script>
         """, unsafe_allow_html=True)
 
     else:
