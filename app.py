@@ -75,7 +75,7 @@ if new_target.strip():
         st.success(f"Redirect successfully updated to: {response.text}")
         
         # Generate the Google search URL
-        google_search_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
+        google_search_url = f"https://www.images.google.com/search?q={new_target.replace(' ', '+')}"
         
         # Display a new prompt underneath with the clickable link to Google
         st.write("You will be redirected to Google search:")
