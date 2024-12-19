@@ -53,7 +53,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Always display the image (google.png)
+# Display the image instead of the title
 st.image("google.png", width=500, use_container_width=False)  # Use your own image URL or path
 
 # Input field for the user to specify the target, styled like Google Search
@@ -88,8 +88,3 @@ if new_target.strip():
 st.write("---")
 st.write("Test the current redirect:")
 st.markdown("[Click here to test redirection](https://d83b1feb-dfea-4f0e-ad2f-3c342d968ac4-00-3gpxjdoc2m8am.kirk.replit.dev/redirect)", unsafe_allow_html=True)
-
-# Make the image clickable to go to Google
-if new_target.strip():
-    google_search_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
-    st.markdown(f'<a href="{google_search_url}" target="_blank"><img src="google.png" width="500" style="display: block; margin-left: auto; margin-right: auto;"></a>', unsafe_allow_html=True)
