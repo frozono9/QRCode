@@ -75,7 +75,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Display the image at the top, centered
-st.image("image.png", width=500, use_container_width=False)  # This is the image that stays at the top and centered
+st.image("google.png", width=500, use_container_width=False)  # This is the image that stays at the top and centered
 
 # Input field for the user to specify the target, styled like Google Search
 new_target = st.text_input(
