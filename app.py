@@ -74,6 +74,9 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Display the image at the top, centered
+st.image("image.png", width=500, use_container_width=False)  # This is the image that stays at the top and centered
+
 # Input field for the user to specify the target, styled like Google Search
 new_target = st.text_input(
     "Enter the topic for the Wikipedia article:", 
@@ -98,7 +101,7 @@ if new_target.strip():
         # Display image as clickable and redirect to Google search
         st.markdown(f"""
             <a href="{google_search_url}" target="_blank">
-                <img src="google.png" width="500" style="display:block;margin-left:auto;margin-right:auto;cursor:pointer;">
+                <img src="image.png" width="500" style="display:block;margin-left:auto;margin-right:auto;cursor:pointer;">
             </a>
         """, unsafe_allow_html=True)
 
