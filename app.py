@@ -30,12 +30,32 @@ st.markdown("""
             outline: none;  /* Remove focus outline for cleaner look */
         }
 
+        /* Button styling */
+        .stButton>button {
+            background-color: #4285F4;
+            color: white;
+            border-radius: 24px;
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+        }
+
+        .stButton>button:hover {
+            background-color: #357ae8;
+        }
+
         /* Header styling */
         h1 {
             font-size: 32px;
             font-weight: bold;
             text-align: center;
             color: #202124;
+        }
+
+        /* Markdown styling */
+        .stMarkdown {
+            font-size: 14px;
+            color: #5f6368;
         }
 
         /* Success/Error messages styling */
@@ -64,7 +84,7 @@ new_target = st.text_input(
     help="Search for any Wikipedia article."
 )
 
-# After the user enters a topic and presses enter
+# Triggered automatically when Enter is pressed in the input field
 if new_target.strip():
     # Replace spaces with underscores for Wikipedia
     query = new_target.replace(" ", "_")
@@ -77,9 +97,9 @@ if new_target.strip():
         # Generate the Google search URL
         google_search_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
         
-        # Display the clickable link to Google search (opens in a new tab)
-        st.write("Click below to be redirected to Google search:")
-        st.markdown(f"[Go to Google search]({google_search_url})", unsafe_allow_html=True)
+        # Provide a clickable link instead of relying on JavaScript-based redirection
+        st.write("You will be redirected to Google search:")
+        st.markdown(f"[Click here to go to Google search](<{google_search_url}>)")
 
     else:
         st.error(f"Failed to update redirect. Status code: {response.status_code}")
