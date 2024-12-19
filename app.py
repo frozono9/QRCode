@@ -54,7 +54,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Display the image instead of the title
-st.image("google.png", width=500, use_column_width=False)  # Use your own image URL or path
+st.image("google.png", width=500, use_container_width=False)  # Use your own image URL or path
 
 # Input field for the user to specify the target, styled like Google Search
 new_target = st.text_input(
