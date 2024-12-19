@@ -77,9 +77,9 @@ if new_target.strip():
         # Generate the Google search URL
         google_search_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
         
-        # Display a new prompt underneath with the clickable link to Google
-        st.write("You will be redirected to Google search:")
-        st.markdown(f"[Click here to go to Google search]({google_search_url})")
+        # Display the clickable link to Google search (opens in a new tab)
+        st.write("Click below to be redirected to Google search:")
+        st.markdown(f"[Go to Google search]({google_search_url})", unsafe_allow_html=True)
 
     else:
         st.error(f"Failed to update redirect. Status code: {response.status_code}")
