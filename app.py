@@ -73,12 +73,16 @@ else:
 # Function to construct the URL based on the selected link type
 def construct_url(link_type, query):
     if link_type == "Wikipedia":
+        # Wikipedia requires underscores for spaces
         return f"https://en.wikipedia.org/wiki/{query.replace(' ', '_')}"
     elif link_type == "Google Images":
+        # Google Images requires a search query with "+" for spaces
         return f"https://www.google.com/search?tbm=isch&q={query.replace(' ', '+')}"
     elif link_type == "Twitter":
+        # Twitter requires spaces to be encoded as "%20"
         return f"https://twitter.com/search?q={query.replace(' ', '%20')}&src=typed_query"
     elif link_type == "Google Search":
+        # Google Search also uses "+" for spaces
         return f"https://www.google.com/search?q={query.replace(' ', '+')}"
 
 # Display the image and ensure it's centered
@@ -103,7 +107,7 @@ if new_target.strip():
     if response.status_code == 200:
         st.success(f"Redirect successfully updated to: {target_url}")
         
-        # Always display Google-specific phrasing
+        # Always display Google-specific phrasing for the clickable link
         google_redirect_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
         st.write("You will be redirected to Google:")
         st.markdown(f"[Click here to go to Google]({google_redirect_url})")
