@@ -63,12 +63,8 @@ if st.session_state.link_type is None:
         "Select the type of link you want to redirect to:",
         ["Wikipedia", "Google Images", "Twitter", "Google Search"]
     )
-    # Store the selected type in session state
-    if link_type:
+    if link_type:  # Store the selected type in session state
         st.session_state.link_type = link_type
-else:
-    # Show the selected link type as a header
-    st.write(f"**Selected Link Type**: {st.session_state.link_type}")
 
 # Function to construct the URL based on the selected link type
 def construct_url(link_type, query):
