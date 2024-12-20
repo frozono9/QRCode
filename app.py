@@ -53,53 +53,34 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Initialize session state for link type
-if "link_type" not in st.session_state:
-    st.session_state.link_type = None
+# Display the image and ensure it's centered
+st.image("google.png", width=500, use_container_width=False)
 
-# Dropdown for selecting the type of link
-if st.session_state.link_type is None:
-    selected_type = st.selectbox(
-        "Select the type of link you want to redirect to:",
-        ["Wikipedia", "Google Images", "Twitter", "Google Search"]
-    )
-    st.session_state.link_type = selected_type
-
-# Display the selected link type
-if st.session_state.link_type:
-    st.write(f"Selected link type: {st.session_state.link_type}")
-
-# Function to construct the URL based on the selected link type
-def construct_url(link_type, query):
-    if link_type == "Wikipedia":
-        return f"https://en.wikipedia.org/wiki/{query.replace(' ', '_')}"
-    elif link_type == "Google Images":
-        return f"https://www.google.com/search?tbm=isch&q={query.replace(' ', '+')}"
-    elif link_type == "Twitter":
-        return f"https://twitter.com/search?q={query.replace(' ', '%20')}&src=typed_query"
-    elif link_type == "Google Search":
-        return f"https://www.google.com/search?q={query.replace(' ', '+')}"
-
-# Input field for the user to specify the target
+# Input field for the user to specify the target, styled like Google Search
 new_target = st.text_input(
-    "Enter your search term or topic:", 
+    "", 
     value="",
     max_chars=100,
-    help="Provide your search term here."
+    help="Search for any Wikipedia article."
 )
 
-# Redirect handling
+# After the user enters a topic and presses enter
 if new_target.strip():
-    # Construct the URL based on the selected link type
-    target_url = construct_url(st.session_state.link_type, new_target)
-    
+    # Replace spaces with underscores for Wikipedia
+    query = new_target.replace(" ", "_")
     # Send the update request to the Flask app
-    response = requests.get(update_url, params={"q": target_url})
+    response = requests.get(update_url, params={"q": query})
     
     if response.status_code == 200:
-        st.success(f"Redirect successfully updated to: {target_url}")
-        st.write("You will be redirected to Google:")
-        st.markdown(f"[Click here to go to the link]({target_url})")
+        st.success(f"Redirect successfully updated to: {response.text}")
+        
+        # Generate the Google search URL
+        google_search_url = f"https://www.images.google.com/search?q={new_target.replace(' ', '+')}"
+        
+        # Display a new prompt underneath with the clickable link to Google
+        st.write("You will be redirected to Google search:")
+        st.markdown(f"[Click here to go to Google search]({google_search_url})")
+
     else:
         st.error(f"Failed to update redirect. Status code: {response.status_code}")
 
