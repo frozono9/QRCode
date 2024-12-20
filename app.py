@@ -53,33 +53,48 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# Dropdown for selecting the type of link
+link_type = st.selectbox(
+    "Select the type of link you want to redirect to:",
+    ["Wikipedia", "Google Images", "Twitter", "Google Search"]
+)
+
 # Display the image and ensure it's centered
 st.image("google.png", width=500, use_container_width=False)
 
-# Input field for the user to specify the target, styled like Google Search
+# Input field for the user to specify the target
 new_target = st.text_input(
     "", 
     value="",
     max_chars=100,
-    help="Search for any Wikipedia article."
+    help="Enter your search term or topic."
 )
+
+# Function to construct the URL based on the selected link type
+def construct_url(link_type, query):
+    if link_type == "Wikipedia":
+        return f"https://en.wikipedia.org/wiki/{query.replace(' ', '_')}"
+    elif link_type == "Google Images":
+        return f"https://www.google.com/search?tbm=isch&q={query.replace(' ', '+')}"
+    elif link_type == "Twitter":
+        return f"https://twitter.com/search?q={query.replace(' ', '%20')}&src=typed_query"
+    elif link_type == "Google Search":
+        return f"https://www.google.com/search?q={query.replace(' ', '+')}"
 
 # After the user enters a topic and presses enter
 if new_target.strip():
-    # Replace spaces with underscores for Wikipedia
-    query = new_target.replace(" ", "_")
+    # Construct the target URL
+    target_url = construct_url(link_type, new_target)
+    
     # Send the update request to the Flask app
-    response = requests.get(update_url, params={"q": query})
+    response = requests.get(update_url, params={"q": target_url})
     
     if response.status_code == 200:
-        st.success(f"Redirect successfully updated to: {response.text}")
+        st.success(f"Redirect successfully updated to: {target_url}")
         
-        # Generate the Google search URL
-        google_search_url = f"https://www.images.google.com/search?q={new_target.replace(' ', '+')}"
-        
-        # Display a new prompt underneath with the clickable link to Google
-        st.write("You will be redirected to Google search:")
-        st.markdown(f"[Click here to go to Google search]({google_search_url})")
+        # Display a new prompt underneath with the clickable link to the constructed URL
+        st.write(f"You will be redirected to {link_type}:")
+        st.markdown(f"[Click here to go to {link_type}]({target_url})")
 
     else:
         st.error(f"Failed to update redirect. Status code: {response.status_code}")
