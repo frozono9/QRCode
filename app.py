@@ -107,10 +107,9 @@ if new_target.strip():
     if response.status_code == 200:
         st.success(f"Redirect successfully updated to: {target_url}")
         
-        # Always display Google-specific phrasing for the clickable link
-        google_redirect_url = f"https://www.google.com/search?q={new_target.replace(' ', '+')}"
-        st.write("You will be redirected to Google:")
-        st.markdown(f"[Click here to go to Google]({google_redirect_url})")
+        # Always display the correct redirect for the selected platform
+        st.write(f"You will be redirected to: {st.session_state.link_type}")
+        st.markdown(f"[Click here to go to the link]({target_url})")
     else:
         st.error(f"Failed to update redirect. Status code: {response.status_code}")
 
