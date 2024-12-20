@@ -53,36 +53,32 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Initialize session state to store the selected link type
+# Initialize session state for link type
 if "link_type" not in st.session_state:
     st.session_state.link_type = None
 
-# Dropdown for selecting the type of link (shown only if no type is selected yet)
+# Dropdown for selecting the type of link
 if st.session_state.link_type is None:
-    link_type = st.selectbox(
+    selected_type = st.selectbox(
         "Select the type of link you want to redirect to:",
         ["Wikipedia", "Google Images", "Twitter", "Google Search"]
     )
-    if link_type:  # Store the selected type in session state
-        st.session_state.link_type = link_type
+    st.session_state.link_type = selected_type
+
+# Display the selected link type
+if st.session_state.link_type:
+    st.write(f"Selected link type: {st.session_state.link_type}")
 
 # Function to construct the URL based on the selected link type
 def construct_url(link_type, query):
     if link_type == "Wikipedia":
-        # Wikipedia requires underscores for spaces
         return f"https://en.wikipedia.org/wiki/{query.replace(' ', '_')}"
     elif link_type == "Google Images":
-        # Google Images requires a search query with "+" for spaces
         return f"https://www.google.com/search?tbm=isch&q={query.replace(' ', '+')}"
     elif link_type == "Twitter":
-        # Twitter requires spaces to be encoded as "%20"
         return f"https://twitter.com/search?q={query.replace(' ', '%20')}&src=typed_query"
     elif link_type == "Google Search":
-        # Google Search also uses "+" for spaces
         return f"https://www.google.com/search?q={query.replace(' ', '+')}"
-
-# Display the image and ensure it's centered
-st.image("google.png", width=500, use_container_width=False)
 
 # Input field for the user to specify the target
 new_target = st.text_input(
@@ -92,9 +88,9 @@ new_target = st.text_input(
     help="Provide your search term here."
 )
 
-# After the user enters a topic and presses enter
+# Redirect handling
 if new_target.strip():
-    # Construct the target URL
+    # Construct the URL based on the selected link type
     target_url = construct_url(st.session_state.link_type, new_target)
     
     # Send the update request to the Flask app
@@ -102,9 +98,7 @@ if new_target.strip():
     
     if response.status_code == 200:
         st.success(f"Redirect successfully updated to: {target_url}")
-        
-        # Always display the correct redirect for the selected platform
-        st.write(f"You will be redirected to: {st.session_state.link_type}")
+        st.write("You will be redirected to Google:")
         st.markdown(f"[Click here to go to the link]({target_url})")
     else:
         st.error(f"Failed to update redirect. Status code: {response.status_code}")
